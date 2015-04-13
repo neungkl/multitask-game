@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>How GREAT multitask are you !!?</title>
+		<meta name="keywords" content="kozartae, kosate studio, kosate, multitask, html5 game, tetris, pong, game" />
+		<meta name="description" content="Game that will test you skill of multitasking. How great multitask are you ? tetris and pong combination. Let's play !! ( Needed browser support html5 canvas )" />
+		<meta property="og:description" content="Game that will test you skill of multitasking. How great multitask are you ? tetris and pong combination. Let's play !! ( Needed browser support html5 canvas )" />
+		<meta property="og:image" content="http://kosatestudio.com/project/multitask/thumnail.jpg" />
+		<meta property="og:title" content="How GREAT multitask are you ??" />
+		<meta property="og:type" content="website" />
+		<meta property="fb:admins" content="100000418457798" />
+		<link rel="shortcut icon" href="../../images/favicon.ico">
+
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/modernizr-2.6.2.js"></script>
+		<script>
+			$(function() {
+				$("#notsupport .hasscript").show();
+
+				if( Modernizr.fontface && Modernizr.opacity && Modernizr.canvas ) {
+					$("#notsupport").hide().next("ul").show();
+				}
+
+			});
+
+			var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-39468607-1']);
+			  _gaq.push(['_setDomainName', 'kosatestudio.com']);
+			  _gaq.push(['_trackPageview']);
+
+			  (function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+
+		</script>
+		<script src="js/kinetic-v4.4.1.min.js"></script>
+		<style type="text/css">
+
+			@font-face {
+				font-family: 'bebas';
+				src: url('js/bebas-webfont.eot');
+				src: url('js/bebas-webfont.eot?#iefix') format('embedded-opentype'),
+					 url('js/bebas-webfont.woff') format('woff'),
+					 url('js/bebas-webfont.ttf') format('truetype'),
+					 url('js/bebas-webfont.svg#bebasregular') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+
+			.rfloat { float:right; }
+			.lfloat { float:left; }
+			.cfloat { clear:both; }
+
+			html,body {
+				min-width:1024px;
+				width:100%;
+				height:100%;
+				background-color:#111;
+				margin:0px; padding:0px;
+			}
+
+			ul { width:100%; margin:0 auto; padding:0px; text-align:center; list-style:none; }
+			ul li { padding-left: 0; padding-right: 0; margin-left: auto; margin-right: auto; }
+
+			#logo { margin:25px auto 30px auto; }
+			#game-ct { background-color:#222; padding:40px 0px 35px 0px; }
+			#score-ct { padding:40px 0px 30px 0px; }
+
+			#tetris { display:inline-block; text-align:left; }
+			#pong { display:inline-block; border-left:4px dashed #333; margin:20px 0px; text-align:left; }
+
+			#handle {
+				margin:0px auto;
+				vertical-align:middle; width:180px; font-family: 'bebas',sans-serif;
+				background-color:#111; border:1px solid #000; color:#EEE; font-size:25px;
+				padding:5px 0px;
+				cursor:pointer;
+				text-shadow:3px 3px 0px #000;
+			}
+			#handle:hover { background-color:#300; border:1px solid #200; color:#EEE; }
+
+			#score-ct .score {
+				background-image:url('score.png');
+				font-family:'bebas',sans-serif;
+				width:874px;
+				height:327px;
+				text-align:left;
+				color:#FFF;
+				text-shadow:2px 2px 0px rgba(0,0,0,.4);
+				font-size:18px;
+				margin:auto;
+				margin-bottom:45px;
+			}
+			#score-ct .score .grade {
+				text-align:center;
+				font-size:80px; position:relative; left:25px; top:37px;
+				text-shadow:4px 4px 1px rgba(0,0,0,.2);
+				-webkit-transform:rotate(-30deg); -webkit-transform-origin:60px 65px;
+				width:135px;
+			}
+			#score-ct .score .summary {
+				position:relative; left:210px; top:-92px;
+			}
+			#score-ct .score .summary table tr:first-child td {
+				width:140px; text-align:center;
+			}
+			#score-ct .score .summary table tr:first-child td:first-child {
+				width:80px;
+			}
+			#score-ct .score .summary table tr:not(:first-child) td:not(:first-child) {
+				text-shadow:none;
+			}
+			#score-ct .score .summary table tr:not(:first-child) td:not(:first-child) span { text-shadow:1px 1px 2px rgba(0,0,0,.4); }
+			#score-ct .score .summary table tr:last-child td:last-child {
+				font-size:24px; text-align:center;
+				text-shadow:2px 2px 0px rgba(0,0,0,.4);
+			}
+
+			#score-ct .achieve { margin:auto; width:924px; }
+			#score-ct .achieve .roll { width:724px; }
+			#score-ct .achieve .roll div {
+				display:inline-block; overflow:hidden; background-image:url('achieve/achieve.png');
+				width:158px;
+				height:158px;
+				margin:0px 0px 15px 15px;
+				opacity:0.05;
+				transition: opacity 0.5s;
+			}
+			#score-ct .achieve .roll div:hover { opacity:0.2; }
+			#score-ct .achieve .roll div.pass { opacity:0.9; }
+			#score-ct .achieve .roll div.pass:hover { opacity:1; }
+
+			#score-ct .achieve .roll p {
+				position:absolute; top:0px; left:0px; border:1px solid #000; background-color:#080808; color:#FFF; padding:5px 7px;
+				margin:0px;
+				font-family:arial,sans-serif;
+				font-weight:bold;
+				max-width:250px;
+				text-align:left;
+				display:inline-block;
+				font-size:12px;
+			}
+
+			a { color:#FFF; text-decoration:none; }
+			#share {
+				background-color:#0E0E0E; font-family:arial,sans-serif; font-size:12px; padding:7px; padding-bottom:0px;
+				color:#FFF;
+				line-height: 20px;
+			}
+
+			#preloading {
+				position:fixed;
+				left:0px;
+				top:0px;
+				height:100%;
+				width:100%;
+				background-color:#111;
+				z-index:1000000;
+			}
+
+		</style>
+		<script src="js/multitask.js"></script>
+	</head>
+	<body>
+		<div id="preloading"></div>
+		<table id="notsupport" style="height:100%; width:100%;" cellpadding="0" cellspacing="0">
+			<tr valign="middle">
+				<td align="center">
+					<div style="padding:20px; color:#FFF; background-color:#0D0D0D; font-family:arial,sans-serif;">
+						<table cellpadding="10">
+							<tr>
+								<td><img src="thumnail.jpg" height="200" /></td>
+								<td>
+									<div style="padding-top:15px;">
+									<noscript>
+										<div>
+										Please turn on Javascript to play this game<br>
+										<a href="http://www.enable-javascript.com/" target="_blank">[ How to turn on ]</a>
+										</div>
+									</noscript>
+									<div class="hasscript" style="display:none;">
+										You browser not support this game.<br>
+										Please upgrade your browser to play this game.<br>
+
+										<br>
+										( Choose one of them )<br>
+										<a href="http://www.google.com/chrome/" target="_blank">&bull; Chrome</a><br>
+										<a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">&bull; Firefox</a><br>
+										<a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">&bull; Internet Explorer</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<ul style="display:none;">
+			<li id="logo"><img src="logo.png" height="151" /></li>
+			<li id="game-ct">
+				<img src="roll.png" height="60" />
+				<div>
+					<div id="tetris"></div>
+					<div id="pong"></div>
+				</div>
+				<div id="handle">Play</div>
+			</li>
+			<li id="score-ct">
+				<div class="score" style="display:none;">
+					<div class="grade">N</div>
+					<div class="summary">
+						<div style="font-size:36px;">Score :</div>
+						<table>
+							<tr>
+								<td></td>
+								<td>Tetris</td>
+								<td>Pong</td>
+								<td>Summary</td>
+							</tr>
+							<tr>
+								<td>Score :</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<td>Level :</td>
+								<td>Not played</td>
+								<td>Not played</td>
+								<td>Not played</td>
+							</tr>
+							<tr>
+								<td>Other :</td>
+								<td>Not played</td>
+								<td>Not played</td>
+								<td>Not played</td>
+							</tr>
+							<tr>
+								<td>Time :</td>
+								<td>5</td>
+								<td>5</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="3"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="achieve">
+					<img class="lfloat" src="achieve/ribbon.png" width="199" />
+					<div class="lfloat roll">
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<p style="display:none;">test</p>
+					</div>
+					<div class="cfloat"></div>
+					<div id="">
+				</div>
+			</li>
+			<li id="share">
+				<div class="lfloat" style="vertical-align: bottom; cursor:pointer;" onclick="gameAchievement(2,14)">
+					Kozartae Studio &copy; 2013
+				</div>
+				<div class="rfloat">
+					<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fkosatestudio.com%2Fproject%2Fmultitask%2F&amp;send=false&amp;layout=button_count&amp;width=75&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp;locale=en_US" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:75px; height:21px;" allowTransparency="true"></iframe>
+					<iframe id="share-twt" allowtransparency="true" frameborder="0" scrolling="no"
+					style="width:60px; height:20px;"></iframe>
+				</div>
+				<div class="cfloat"></div>
+			</li>
+		</ul>
+	</body>
+</html>
