@@ -1,9 +1,6 @@
 # Multitask Game
 
-<img src="preview.png" width="600">
-
-
-sss
+<img src="preview.png" width="700">
 
 My persolnal game (website base) about multitasking.
 
@@ -13,3 +10,7 @@ This game include archievement (Use local storage).
 And Kinetic for render canvas.
 
 Game link here : [http://project.neungkl.com/multitask/](http://project.neungkl.com/multitask/)
+
+## License
+
+Kosate Limpongsa &#169; [LICENSE](LICENSE)
