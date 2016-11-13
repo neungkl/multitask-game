@@ -2,8 +2,7 @@
 
 <img src="preview.png" width="700">
 
-My persolnal game (website base) about multitasking.
-
+My personal game (website base) about multitasking.<br>
 You must play Tetris and Pong in the same time to archieve the game.
 
 This game include archievement (Use local storage).
